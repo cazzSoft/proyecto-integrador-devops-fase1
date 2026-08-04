@@ -164,5 +164,7 @@ docker compose down
 
 ## Entregable
 
-El informe final se encuentra en [docs/Proyecto_Integrador_DevOps_Fase_1.pdf](docs/Proyecto_Integrador_DevOps_Fase_1.pdf).
+La entrega incluye:
 
+- [Informe final en PDF](docs/Proyecto_Integrador_DevOps_Fase_1.pdf), listo para subir a Moodle.
+- [Copia editable en Word](docs/Proyecto_Integrador_DevOps_Fase_1.docx), para realizar ajustes posteriores.
