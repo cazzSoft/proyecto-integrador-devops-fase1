@@ -99,15 +99,20 @@ frame = Frame(MARGIN, 1.2 * cm, PAGE_W - 2 * MARGIN, PAGE_H - 2.55 * cm, id="fra
 doc.addPageTemplates(PageTemplate(id="pages", frames=[frame], onPage=header_footer))
 story = []
 
-# Portada
-story += [Spacer(1, 1.5 * cm), Image(str(LOGO), width=7.2 * cm, height=2.5 * cm), Spacer(1, 1.35 * cm),
-          p("MAESTRÍA EN DISEÑO WEB Y DESARROLLO DE APPS", "CoverSub"),
-          p("PROYECTO INTEGRADOR DEVOPS", "CoverTitle"), p("Fase 1: diagnóstico y planificación", "CoverSub"), Spacer(1, 1.0 * cm)]
-meta = table(["Datos académicos", "Información"], [
-    ["Estudiante", "Cristhian Alfredo Zambrano Zambrano"], ["Docente", "Mg. Enrique Javier Macías Arias"],
-    ["Asignatura", "DevOps"], ["Cohorte", "II Cohorte - Paralelo A"],
-], [4.1 * cm, 10.0 * cm], 8.2)
-story += [meta, Spacer(1, 2.1 * cm), p("ESPAM MFL  |  2026", "CoverSub"), PageBreak()]
+# Portada adaptada al formato institucional usado en trabajos anteriores
+story += [Spacer(1, 0.55 * cm), Image(str(LOGO), width=8.7 * cm, height=3.0 * cm), Spacer(1, 0.38 * cm),
+          p("<b>ESCUELA SUPERIOR POLITÉCNICA AGROPECUARIA DE MANABÍ<br/>MANUEL FÉLIX LÓPEZ</b>", "CoverSub"),
+          Spacer(1, 0.16 * cm),
+          p("<b>MAESTRÍA EN DISEÑO WEB Y DESARROLLO DE APPS<br/>II COHORTE PARALELO A</b>", "CoverSub"),
+          Spacer(1, 0.18 * cm), p("<b>TEMA:</b>", "CoverSub"),
+          p("PROYECTO INTEGRADOR DEVOPS - FASE 1", "CoverTitle"),
+          p("<b>DIAGNÓSTICO Y PLANIFICACIÓN</b>", "CoverSub"), Spacer(1, 0.15 * cm),
+          p("<b>SISTEMA SELECCIONADO:</b><br/>SISTEMA WEB CRUD PARA LA GESTIÓN DE USUARIOS", "CoverSub"),
+          Spacer(1, 0.1 * cm),
+          p("<b>AUTOR:</b><br/>CRISTHIAN ALFREDO ZAMBRANO ZAMBRANO", "CoverSub"),
+          Spacer(1, 0.1 * cm),
+          p("<b>MÓDULO: DEVOPS</b><br/><b>DOCENTE: MG. ENRIQUE JAVIER MACÍAS ARIAS</b>", "CoverSub"),
+          Spacer(1, 0.18 * cm), p("<b>AGOSTO DE 2026</b>", "CoverSub"), PageBreak()]
 
 # Página 1
 story += [p("01 · CONTEXTO Y FLUJO", "Kicker"), p("Sistema web CRUD para la gestión de usuarios", "H1a"),

@@ -232,29 +232,43 @@ p.alignment = WD_ALIGN_PARAGRAPH.LEFT
 set_font(p.add_run("ESPAM MFL  |  DEVOPS  |  PROYECTO INTEGRADOR - FASE 1"), 8, NAVY, True)
 footer = section.footer
 add_page_number(footer.paragraphs[0])
+first_footer = section.first_page_footer
+fp = first_footer.paragraphs[0]
+fp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+set_font(fp.add_run("ESPAM MFL | Maestría en Diseño Web y Desarrollo de Apps | Página 1"), 7.5, MID_GRAY)
 
 # Portada
-add_para(doc, "", after=22)
+add_para(doc, "", after=6)
 p = doc.add_paragraph()
 p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-logo_shape = p.add_run().add_picture(str(LOGO), width=Inches(3.1))
+logo_shape = p.add_run().add_picture(str(LOGO), width=Inches(3.75))
 logo_shape._inline.docPr.set("descr", "Logotipo institucional de la ESPAM MFL")
 logo_shape._inline.docPr.set("title", "ESPAM MFL")
-add_para(doc, "", after=20)
-add_para(doc, "MAESTRÍA EN DISEÑO WEB Y DESARROLLO DE APPS", size=12, color=MID_GRAY,
-         bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, after=24)
-add_para(doc, "PROYECTO INTEGRADOR DEVOPS", size=22, color=NAVY, bold=True,
-         align=WD_ALIGN_PARAGRAPH.CENTER, after=5)
-add_para(doc, "Fase 1: diagnóstico y planificación", size=13, color=GREEN,
-         align=WD_ALIGN_PARAGRAPH.CENTER, after=32)
-add_table(doc, ["Datos académicos", "Información"], [
-    ["Estudiante", "Cristhian Alfredo Zambrano Zambrano"],
-    ["Docente", "Mg. Enrique Javier Macías Arias"],
-    ["Asignatura", "DevOps"],
-    ["Cohorte", "II Cohorte - Paralelo A"],
-], [2600, 6760], 9)
-add_para(doc, "ESPAM MFL  |  2026", size=10, color=MID_GRAY, bold=True,
-         align=WD_ALIGN_PARAGRAPH.CENTER, before=48, after=0)
+add_para(doc, "", after=7)
+add_para(doc, "ESCUELA SUPERIOR POLITÉCNICA AGROPECUARIA DE MANABÍ\nMANUEL FÉLIX LÓPEZ",
+         size=11, color=NAVY, bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, after=10, line=1.0)
+add_para(doc, "MAESTRÍA EN DISEÑO WEB Y DESARROLLO DE APPS\nII COHORTE PARALELO A",
+         size=10, color="263844", bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, after=12, line=1.0)
+add_para(doc, "TEMA:", size=10, color="263844", bold=True,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=3, line=1.0)
+add_para(doc, "PROYECTO INTEGRADOR DEVOPS - FASE 1",
+         size=18, color=NAVY, bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, after=3, line=1.0)
+add_para(doc, "DIAGNÓSTICO Y PLANIFICACIÓN",
+         size=12, color=GREEN, bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, after=10, line=1.0)
+add_para(doc, "SISTEMA SELECCIONADO:", size=9, color="263844", bold=True,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=2, line=1.0)
+add_para(doc, "SISTEMA WEB CRUD PARA LA GESTIÓN DE USUARIOS",
+         size=9.5, color="263844", bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, after=9, line=1.0)
+add_para(doc, "AUTOR:", size=9, color="263844", bold=True,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=2, line=1.0)
+add_para(doc, "CRISTHIAN ALFREDO ZAMBRANO ZAMBRANO",
+         size=9.5, color="263844", bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, after=8, line=1.0)
+add_para(doc, "MÓDULO: DEVOPS", size=9, color="263844", bold=True,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=3, line=1.0)
+add_para(doc, "DOCENTE: MG. ENRIQUE JAVIER MACÍAS ARIAS",
+         size=9, color="263844", bold=True, align=WD_ALIGN_PARAGRAPH.CENTER, after=9, line=1.0)
+add_para(doc, "AGOSTO DE 2026", size=9.5, color="263844", bold=True,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=0, line=1.0)
 doc.add_page_break()
 
 # Página 1 de contenido
