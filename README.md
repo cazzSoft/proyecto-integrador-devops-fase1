@@ -2,11 +2,6 @@
 
 Diagnóstico y planificación DevOps de un sistema web CRUD para la gestión de usuarios.
 
-[![Phase](https://img.shields.io/badge/fase-diagnóstico%20y%20planificación-006b58)](#propuesta-inicial-devops)
-[![Frontend](https://img.shields.io/badge/frontend-React%20%2B%20TypeScript-149eca)](frontend/)
-[![Backend](https://img.shields.io/badge/backend-Fastify%20%2B%20Prisma-111827)](backend/)
-[![Database](https://img.shields.io/badge/database-PostgreSQL-4169e1)](docker-compose.yml)
-
 ## Información académica
 
 - **Estudiante:** Cristhian Alfredo Zambrano Zambrano
@@ -161,10 +156,3 @@ docker compose down
 - Auditoría de dependencias: 2 hallazgos en frontend y 6 de severidad alta en backend; registrados como riesgo y trabajo futuro.
 - Los archivos `.env` reales están excluidos y existe una plantilla segura.
 - La ejecución integral con Docker Compose debe comprobarse en un equipo con Docker Desktop.
-
-## Entregable
-
-La entrega incluye:
-
-- [Informe final en PDF](docs/Proyecto_Integrador_DevOps_Fase_1.pdf), listo para subir a Moodle.
-- [Copia editable en Word](docs/Proyecto_Integrador_DevOps_Fase_1.docx), para realizar ajustes posteriores.
