@@ -155,4 +155,36 @@ docker compose down
 - `npm run build` en backend: correcto.
 - Auditoría de dependencias: 2 hallazgos en frontend y 6 de severidad alta en backend; registrados como riesgo y trabajo futuro.
 - Los archivos `.env` reales están excluidos y existe una plantilla segura.
-- La ejecución integral con Docker Compose debe comprobarse en un equipo con Docker Desktop.
+- La ejecución integral con Docker Compose fue comprobada en Docker Desktop.
+
+## Pruebas automatizadas
+
+El backend incluye pruebas de integración con Vitest y la inyección HTTP de Fastify. La suite verifica la creación de un usuario válido y el rechazo de una solicitud sin nombre.
+
+```bash
+cd backend
+npm ci
+npm test
+npm run build
+```
+
+Para validar el frontend:
+
+```bash
+cd frontend
+npm ci
+npm run lint
+npm run build
+```
+
+## Integración continua
+
+El workflow `.github/workflows/ci.yml` se ejecuta en ramas `feat/**`, pull requests hacia `main` y cambios integrados en `main`. Sus controles son:
+
+1. **Validar Backend:** dependencias, Prisma, pruebas y compilación.
+2. **Validar Frontend:** dependencias, ESLint y compilación.
+3. **Validar Docker:** configuración de Compose y construcción de imágenes.
+
+La tercera etapa se ejecuta únicamente cuando las validaciones del backend y frontend terminan correctamente. El flujo recomendado utiliza una rama corta, pull request, revisión del pipeline e integración posterior a `main`.
+
+Durante la validación local, ESLint detectó una variable declarada y no utilizada. Se eliminó la variable del bloque de captura y se repitieron los controles satisfactoriamente. Vitest también encontró una prueba compilada dentro de `dist`; se restringió la búsqueda a `src/**/*.test.ts` y se excluyeron las pruebas de la compilación de producción.
