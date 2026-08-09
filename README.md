@@ -131,6 +131,7 @@ docker compose logs -f
 
 - Frontend: <http://localhost:5173>
 - Backend: <http://localhost:3001>
+- Salud del backend: <http://localhost:3001/health>
 - PostgreSQL: `localhost:5434`
 
 Para detener los servicios sin eliminar datos:
@@ -148,6 +149,31 @@ docker compose down
 | POST | `/api/users` | Crear un usuario |
 | PUT | `/api/users/:id` | Actualizar un usuario |
 | DELETE | `/api/users/:id` | Eliminar un usuario |
+| GET | `/health` | Verificar disponibilidad del backend |
+
+## Práctica 1: flujo Git, Docker y CI/CD
+
+La práctica se desarrolla en una rama corta y se integra mediante pull request después de aprobar los controles automáticos. El cambio funcional incorpora `GET /health`, cuya respuesta identifica el servicio y confirma su disponibilidad sin consultar la base de datos.
+
+Las imágenes generadas por Docker Compose utilizan etiquetas identificables:
+
+- `cazzsoft/gestion-usuarios-backend:practica1`
+- `cazzsoft/gestion-usuarios-frontend:practica1`
+
+Comprobación reproducible:
+
+```bash
+cd backend
+npm ci
+npm test
+npm run build
+cd ..
+docker compose config
+docker compose build
+docker compose up -d
+docker compose ps
+curl http://localhost:3001/health
+```
 
 ## Verificaciones realizadas
 
