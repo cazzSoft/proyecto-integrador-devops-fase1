@@ -15,6 +15,12 @@ export function buildApp(logger = true) {
     message: 'Servidor Backend Fastify activo',
   }));
 
+  app.get('/health', async () => ({
+    status: 'ok',
+    service: 'gestion-usuarios-backend',
+    uptime: Math.floor(process.uptime()),
+  }));
+
   app.register(userRoutes);
   return app;
 }
