@@ -1,6 +1,6 @@
-# Proyecto integrador DevOps - Fase 1
+# Proyecto integrador DevOps
 
-Diagnóstico y planificación DevOps de un sistema web CRUD para la gestión de usuarios.
+Evolución DevOps de un sistema web CRUD para la gestión de usuarios. La Fase 1 documenta el diagnóstico y la planificación; la Fase 2 incorpora versionamiento, pruebas automatizadas, contenedores e integración continua.
 
 ## Información académica
 
@@ -51,7 +51,7 @@ flowchart LR
 
 El detalle de responsables, evidencias, esperas y riesgos se encuentra en [docs/diagnostico-devops.md](docs/diagnostico-devops.md).
 
-## Diagnóstico priorizado
+## Diagnóstico priorizado - línea base de la Fase 1
 
 | Prioridad | Cuello de botella o riesgo | Causa | Impacto |
 |---|---|---|---|
@@ -94,7 +94,7 @@ flowchart LR
 | 31-60 días | Revisión sin culpa de fallos | Definición de criterios de aceptación y rollback | Pruebas unitarias/API, auditoría de dependencias y SAST | Menos regresiones y vulnerabilidades visibles |
 | 61-90 días | Revisión periódica de métricas | Despliegue pequeño y aprobado | Imágenes versionadas, ambiente de prueba y observabilidad | Entregas trazables y recuperación documentada |
 
-### Métricas iniciales
+### Métricas iniciales - línea base de la Fase 1
 
 | Métrica | Línea base | Forma de medición | Meta inicial |
 |---|---|---|---|
