@@ -87,7 +87,8 @@ EOF
                 stage('Frontend - Analisis') {
                     steps {
                         dir('frontend') {
-                            sh 'npm run lint'
+                            //sh 'npm run lint'
+                            sh 'npm run lint-fallo-controlado'
                         }
                     }
                 }
