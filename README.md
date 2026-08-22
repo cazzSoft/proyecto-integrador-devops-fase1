@@ -214,3 +214,5 @@ El workflow `.github/workflows/ci.yml` se ejecuta en ramas `feat/**`, pull reque
 La tercera etapa se ejecuta únicamente cuando las validaciones del backend y frontend terminan correctamente. El flujo recomendado utiliza una rama corta, pull request, revisión del pipeline e integración posterior a `main`.
 
 Durante la validación local, ESLint detectó una variable declarada y no utilizada. Se eliminó la variable del bloque de captura y se repitieron los controles satisfactoriamente. Vitest también encontró una prueba compilada dentro de `dist`; se restringió la búsqueda a `src/**/*.test.ts` y se excluyeron las pruebas de la compilación de producción.
+
+Prueba.. webhook
