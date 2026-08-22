@@ -32,3 +32,25 @@ describe('GET /health', () => {
     expect(response.statusCode).toBe(404);
   });
 });
+
+describe('GET /metrics', () => {
+  const apps: ReturnType<typeof buildApp>[] = [];
+
+  afterEach(async () => {
+    await Promise.all(apps.splice(0).map((app) => app.close()));
+  });
+
+  it('expone metricas compatibles con Prometheus', async () => {
+    const app = buildApp(false);
+    apps.push(app);
+
+    await app.inject({ method: 'GET', url: '/health' });
+    const response = await app.inject({ method: 'GET', url: '/metrics' });
+
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['content-type']).toContain('text/plain');
+    expect(response.body).toContain('app_http_requests_total');
+    expect(response.body).toContain('app_http_request_duration_seconds');
+    expect(response.body).toContain('app_process_resident_memory_bytes');
+  });
+});

@@ -216,3 +216,112 @@ La tercera etapa se ejecuta únicamente cuando las validaciones del backend y fr
 Durante la validación local, ESLint detectó una variable declarada y no utilizada. Se eliminó la variable del bloque de captura y se repitieron los controles satisfactoriamente. Vitest también encontró una prueba compilada dentro de `dist`; se restringió la búsqueda a `src/**/*.test.ts` y se excluyeron las pruebas de la compilación de producción.
 
 Prueba.. webhook
+## Observabilidad con Prometheus y Grafana
+
+La fase de observabilidad agrega un endpoint de metricas en el backend, recoleccion periodica con Prometheus y visualizacion en Grafana mediante un dashboard versionado en el repositorio.
+
+### Arquitectura de observabilidad
+
+```mermaid
+flowchart LR
+    U["Usuario"] --> F["Frontend React :5173"]
+    F --> B["Backend Fastify :3000"]
+    B --> M["/metrics"]
+    M --> P["Prometheus :9090"]
+    P --> G["Grafana :3002"]
+    G --> D["Dashboard y alerta"]
+```
+
+### Endpoint de metricas
+
+El backend expone metricas Prometheus en:
+
+- Local desde el host: <http://localhost:3001/metrics>
+- Interno en Docker Compose: `http://backend:3000/metrics`
+
+Metricas principales:
+
+| Metrica | Uso |
+|---|---|
+| `app_http_requests_total` | Contador de solicitudes HTTP por metodo, ruta y codigo de estado. |
+| `app_http_request_duration_seconds` | Histograma de duracion de solicitudes para calcular percentiles como P95. |
+| `app_process_resident_memory_bytes` | Memoria residente usada por el proceso Node.js. |
+| `app_nodejs_heap_size_used_bytes` | Memoria heap usada por Node.js. |
+| `app_process_cpu_seconds_total` | Tiempo acumulado de CPU usado por el proceso. |
+
+### Levantar el stack completo
+
+```bash
+docker compose up --build -d
+docker compose ps
+```
+
+Servicios de verificacion:
+
+- Frontend: <http://localhost:5173>
+- Backend: <http://localhost:3001>
+- Salud del backend: <http://localhost:3001/health>
+- Metricas del backend: <http://localhost:3001/metrics>
+- Prometheus: <http://localhost:9090>
+- Grafana: <http://localhost:3002>
+
+Credenciales locales de Grafana:
+
+- Usuario: `admin`
+- Contrasena: `admin123`
+
+> Estas credenciales son solo para laboratorio local. En produccion deben gestionarse como secretos.
+
+### Prometheus
+
+El archivo `observability/prometheus.yml` define dos jobs:
+
+- `prometheus`: monitorea el propio servidor Prometheus.
+- `backend`: recolecta `backend:3000/metrics` dentro de la red Docker.
+
+Para validar los targets, abrir:
+
+```text
+http://localhost:9090/targets
+```
+
+El target `backend` debe aparecer en estado `UP`.
+
+### Grafana
+
+Grafana se aprovisiona automaticamente con:
+
+- Datasource: `observability/grafana/provisioning/datasources/prometheus.yml`
+- Dashboard provider: `observability/grafana/provisioning/dashboards/dashboards.yml`
+- Dashboard JSON: `observability/grafana/dashboards/observabilidad-proyecto-integrador.json`
+- Alerta de latencia P95: `observability/grafana/provisioning/alerting/backend-latency.yml`
+
+El dashboard se llama **Observabilidad - Proyecto Integrador** e incluye:
+
+1. Solicitudes HTTP por segundo.
+2. Solicitudes por codigo HTTP.
+3. Tiempo de respuesta P95.
+4. Memoria utilizada por el backend.
+5. CPU del backend.
+
+### Generar trafico para evidencias
+
+```powershell
+1..30 | ForEach-Object { Invoke-WebRequest http://localhost:3001/health | Out-Null }
+1..30 | ForEach-Object { Invoke-WebRequest http://localhost:3001/api/users | Out-Null }
+```
+
+Despues de unos segundos, Prometheus y Grafana deben mostrar datos activos.
+
+### Integracion con Jenkins
+
+El `Jenkinsfile` incluye la etapa **4. Observabilidad / Prometheus**, que valida `observability/prometheus.yml` con `promtool` antes de construir las imagenes Docker. Si el archivo tiene errores de sintaxis, el pipeline se detiene y evita publicar una configuracion de observabilidad invalida.
+
+### Evidencias sugeridas
+
+- Captura de `http://localhost:3001/metrics`.
+- Captura de Prometheus con `backend` en estado `UP`.
+- Captura del dashboard de Grafana con datos reales.
+- Captura de la alerta aprovisionada en Grafana.
+- Captura de Jenkins con la etapa **Observabilidad / Prometheus** aprobada.
+- Archivo JSON del dashboard incluido en el repositorio.

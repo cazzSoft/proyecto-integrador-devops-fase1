@@ -1,9 +1,12 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import { userRoutes } from './routes/userRoutes';
+import { registerMetrics } from './metrics';
 
 export function buildApp(logger = true) {
   const app = Fastify({ logger });
+
+  registerMetrics(app);
 
   app.register(cors, {
     origin: true,

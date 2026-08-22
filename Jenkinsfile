@@ -98,7 +98,24 @@ EOF
             }
         }
 
-        stage('4. Construccion') {
+        stage('4. Observabilidad / Prometheus') {
+            steps {
+                sh '''
+                    set -eu
+                    test -f observability/prometheus.yml
+                    test -f observability/grafana/dashboards/observabilidad-proyecto-integrador.json
+
+                    docker run --rm \
+                        -v "$WORKSPACE/observability/prometheus.yml:/etc/prometheus/prometheus.yml:ro" \
+                        --entrypoint /bin/promtool \
+                        prom/prometheus:latest \
+                        check config /etc/prometheus/prometheus.yml
+
+                    echo 'Configuracion de Prometheus valida.'
+                '''
+            }
+        }
+        stage('5. Construccion') {
             steps {
                 sh '''
                     set -eu
@@ -117,7 +134,7 @@ EOF
             }
         }
 
-        stage('5. Publicacion') {
+        stage('6. Publicacion') {
             steps {
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-cazzsoft',
